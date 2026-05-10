@@ -1,5 +1,7 @@
 # Informative git prompt for zsh
 
+> **Fork of [olivierverdier/zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt)** with macOS compatibility fixes: defaults to `python3` and accepts both `python` and `python3` as `GIT_PROMPT_EXECUTABLE`.
+
 [![Build Status](https://travis-ci.org/olivierverdier/zsh-git-prompt.svg)](https://travis-ci.org/olivierverdier/zsh-git-prompt)
 
 A `zsh` prompt that displays information about the current git repository. In particular the branch name, difference with remote branch, number of files staged, changed, etc.
@@ -69,6 +71,15 @@ When the branch name starts with a colon `:`, it means it’s actually a hash, n
     PROMPT='%B%m%~%b$(git_super_status) %# '
     ```
 3.  Go in a git repository and test it!
+
+### Python version
+
+By default, `python3` is used. To use a different executable, set `GIT_PROMPT_EXECUTABLE` before sourcing:
+
+```sh
+export GIT_PROMPT_EXECUTABLE="python"  # use python instead of python3
+source path/to/zshrc.sh
+```
 
 ### Haskell (optional)
 
