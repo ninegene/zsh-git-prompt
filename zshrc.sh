@@ -6,6 +6,7 @@
 export __GIT_PROMPT_DIR=${0:A:h}
 
 export GIT_PROMPT_EXECUTABLE=${GIT_PROMPT_EXECUTABLE:-"python3"}
+export ZSH_THEME_GIT_PROMPT_SHOW_CLEAN=${ZSH_THEME_GIT_PROMPT_SHOW_CLEAN:-1}
 
 # Initialize colors.
 autoload -U colors
@@ -62,6 +63,10 @@ function update_current_git_vars() {
 
 
 git_super_status() {
+	if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		unset __CURRENT_GIT_STATUS GIT_BRANCH GIT_AHEAD GIT_BEHIND GIT_STAGED GIT_CONFLICTS GIT_CHANGED GIT_UNTRACKED
+		return
+	fi
 	precmd_update_git_vars
     if [ -n "$__CURRENT_GIT_STATUS" ]; then
 	  # When ZSH_THEME_GIT_PROMPT_SHOW_CLEAN is unset, suppress output for fully
