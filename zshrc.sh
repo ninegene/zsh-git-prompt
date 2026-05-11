@@ -20,6 +20,7 @@ autoload -U add-zsh-hook
 add-zsh-hook chpwd chpwd_update_git_vars
 add-zsh-hook preexec preexec_update_git_vars
 add-zsh-hook precmd precmd_update_git_vars
+add-zsh-hook precmd precmd_update_prompt_spacing
 
 ## Function definitions
 function preexec_update_git_vars() {
@@ -39,6 +40,18 @@ function precmd_update_git_vars() {
 
 function chpwd_update_git_vars() {
     update_current_git_vars
+}
+
+function precmd_update_prompt_spacing() {
+	if [ -z "$__GIT_PROMPT_BASE_PROMPT" ]; then
+		__GIT_PROMPT_BASE_PROMPT="$PROMPT"
+	fi
+
+	if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		PROMPT="$__GIT_PROMPT_BASE_PROMPT"
+	else
+		PROMPT="$(printf '%s' "$__GIT_PROMPT_BASE_PROMPT" | sed 's/ $(git_super_status) / /')"
+	fi
 }
 
 function update_current_git_vars() {
